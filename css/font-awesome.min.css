@@ -162,6 +162,47 @@
 .fa-inverse {
     color:#fff
 }
+
+
+
+.fa-github:before {
+    content:"\e735"
+}
+.fa-jianshu:before {
+    content:"\e68e"
+}
+.fa-coding:before {
+    content:"\e501"
+}
+.fa-weibo:before {
+    content:"\e619"
+}
+.fa-sun-o:before {
+    content:"\f0003"
+}
+.fa-comment-o:before {
+    content:"\e655"
+}
+.fa-sitemap:before {
+    content:"\e655"
+}
+.fa-tag:before {
+    content:"\e617"
+}
+.fa-bookmark:before {
+    content:"\e644"
+}
+
+
+
+
+
+
+
+
+
+
+
 .fa-glass:before {
     content:"\f000"
 }
@@ -282,27 +323,21 @@
 .fa-barcode:before {
     content:"\f02a"
 }
-.fa-tag:before {
-    content:"\f02b"
-}
+
 .fa-tags:before {
     content:"\f02c"
 }
 .fa-book:before {
     content:"\f02d"
 }
-.fa-bookmark:before {
-    content:"\f02e"
-}
+
 .fa-print:before {
     content:"\f02f"
 }
 .fa-camera:before {
     content:"\f030"
 }
-.fa-font:before {
-    content:"\f031"
-}
+
 .fa-bold:before {
     content:"\f032"
 }
@@ -600,15 +635,13 @@
 .fa-facebook:before {
     content:"\f09a"
 }
-.fa-github:before {
-    content:"\f09b"
+
+
+
+.fa-font:before {
+    content:"\f031"
 }
-.fa-jianshu:before {
-    content:"\e68e"
-}
-.fa-coding:before {
-    content:"\e600"
-}
+
 .fa-unlock:before {
     content:"\f09c"
 }
@@ -777,18 +810,14 @@
 .fa-dashboard:before,.fa-tachometer:before {
     content:"\f0e4"
 }
-.fa-comment-o:before {
-    content:"\f0e5"
-}
+
 .fa-comments-o:before {
     content:"\f0e6"
 }
 .fa-flash:before,.fa-bolt:before {
     content:"\f0e7"
 }
-.fa-sitemap:before {
-    content:"\f0e8"
-}
+
 .fa-umbrella:before {
     content:"\f0e9"
 }
@@ -1221,24 +1250,18 @@
 .fa-gittip:before {
     content:"\f184"
 }
-.fa-sun-o:before {
-    content:"\f185"
-}
+
 .fa-moon-o:before {
     content:"\f186"
 }
 .fa-archive:before {
     content:"\f187"
 }
-.fa-bug:before {
-    content:"\f188"
-}
+
 .fa-vk:before {
     content:"\f189"
 }
-.fa-weibo:before {
-    content:"\f18a"
-}
+
 .fa-renren:before {
     content:"\f18b"
 }
