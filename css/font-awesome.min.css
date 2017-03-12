@@ -593,6 +593,11 @@
 .fa-github:before {
 	content:"\f09b"
 }
+.fa-jianshu:before {
+    content:"\f09b"
+}.fa-coding:before {
+    content:"\f09b"
+}
 .fa-unlock:before {
 	content:"\f09c"
 }
