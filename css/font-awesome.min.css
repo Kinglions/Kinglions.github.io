@@ -595,12 +595,11 @@
 }
 .fa-jianshu:before {
     content:"\e613"
-}.fa-coding:before {
+}
+.fa-coding:before {
     content:"\e62b";
 }
-.icon-coding-copy:before {
-    content: "\e62b";
-}
+.icon-coding-copy:before { content: "\e62b"; }
 .fa-unlock:before {
 	content:"\f09c"
 }
