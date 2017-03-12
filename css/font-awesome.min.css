@@ -166,31 +166,31 @@
 
 
 .fa-github:before {
-    content:"\e735"
+     content: "\e735";
 }
 .fa-jianshu:before {
-    content:"\e68e"
+     content: "\e68e" ;
 }
 .fa-coding:before {
-    content:"\e501"
+     content: "\e501" ;
 }
 .fa-weibo:before {
-    content:"\e619"
+     content: "\e619" ;
 }
 .fa-sun-o:before {
-    content:"\f0003"
+     content: "\f0003" ;
 }
 .fa-comment-o:before {
-    content:"\e655"
+     content: "\e655" ;
 }
 .fa-sitemap:before {
-    content:"\e655"
+     content: "\e655" ;
 }
 .fa-tag:before {
-    content:"\e617"
+     content: "\e617" ;
 }
 .fa-bookmark:before {
-    content:"\e644"
+     content:"\e644" ;
 }
 
 
