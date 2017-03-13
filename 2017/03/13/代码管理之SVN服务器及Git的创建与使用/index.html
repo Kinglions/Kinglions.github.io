@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="kinglionsfrank@163.com"><title>代码管理之SVN服务器及Git的创建与使用 · Frank(不羁放荡爱自由)</title><meta name="description" content="SVN和Git的都是用于项目配置项管理的工具，区别很大，各有千秋。但他们之间的区别并非今天我要谈论的重点，因为这些有很多成熟的文章博客介绍。所以今天我主要是介绍一些SVN和Git的创建以及使用方法。其实我也是自己在这个问题上吃了很大的亏之后，才研究整理出这篇文章的，希望能够帮到一些受困的猿友。
+（一"><meta name="keywords" content="Hexo,HTML,Frank,CSS,iOS,苹果"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo.png" style="width:127px;"><h4 title=""><a href="/">Frank(不羁放荡爱自由)</a></h4><div class="description"><p>程序猿的生活中其实并非只有code，我们还有诗和远方 ~~~</p></div></div></div><ul class="social-links"><li><a href="http://www.jianshu.com/u/d35e7ed50e98"><i class="fa fa-jianshu"></i></a></li><li><a href="https://github.com/Kinglions"><i class="fa fa-github"></i></a></li><li><a href="https://kinglions.coding.me"><i class="fa fa-coding"></i></a></li><li><a href="http://weibo.com/u/5183524910"><i class="fa fa-weibo"></i></a></li><li><a href="mailto:u/5183524910"><i class="fa fa-emil"></i></a></li></ul><div class="footer"><a target="_blank" href="/"><span>Theme by</span></a><a href="http://www.jianshu.com/u/d35e7ed50e98"> KingLionsFrank</a><span>&</span><a href="https://github.com/Kinglions"> Frank</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li></div><div class="information"><div class="back_btn"><li><a onclick="window.history.go(-1)" class="fa fa-chevron-left"> </a></li></div><div class="avatar"><img src="/images/logo.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>代码管理之SVN服务器及Git的创建与使用</a></h3></div><div class="post-content"><p>SVN和Git的都是用于项目配置项管理的工具，区别很大，各有千秋。但他们之间的区别并非今天我要谈论的重点，因为这些有很多成熟的文章博客介绍。所以今天我主要是介绍一些SVN和Git的创建以及使用方法。其实我也是自己在这个问题上吃了很大的亏之后，才研究整理出这篇文章的，希望能够帮到一些受困的猿友。</p>
+<p>（一）首先介绍的是Mac平台上SVN服务器的搭建：</p>
+<p>1、可以再你自定义的位置上创建一个文件，例如在桌面上新建一个SVNTest文件夹</p>
+<p>2、打开终端，并输入 $ svnadmin create +文件路径（如红线所示）</p>
+<p>此时如果出现这种问题：</p>
+<p>那就需要你进行安装一下：Command Line Tools工具，使终端识别svn命令；早期Xcode可以直接安装：打开xcode偏好设置（comand+，）–&gt;”Download” –&gt;Components:下载Command Line Tools，直接然后搞定，但是新版本的Xcode已经没有这项设置了，所以你可以在终端输入：</p>
+<p>xcode-select –install</p>
+<p>出现如下提示，进行安装就可以了。然后重新在终端上输入</p>
+<p>$ svnadmin create +文件路径，成功之后，新建的文件夹里会多出一些文件，如下图</p>
+<p>3、分别打开红框中的文件，进行位置权限</p>
+<p>首先打开svnserve.conf文件，去除下图蓝框中命令前的 #（空格）：</p>
+<p>修改之后为：</p>
+<p>anon-access = read代表匿名访问的时候是只读的，若改为anon-access = none代表禁止匿名访问，需要帐号密码才能访问；</p>
+<p>auth-access = write 使授权用户有写权限；</p>
+<p>password-db = passwd指明密码文件路径；</p>
+<p>uthz-db = authz  访问控制文件。</p>
+<p>然后在修改 passed 文件：添加 账号密码：（添加前）</p>
+<p>添加后：</p>
+<p>即在 [users]下面添加  用户名 = 密码，可以是一个，也可以是多个；</p>
+<p>最后需要打开 authz 设置权限：</p>
+<p>在 [groups]下添加之前配置的账号到组中</p>
+<p>即 组名 = 用户名1，用户名2    // 表示可以添加一个或多个用户名</p>
+<p>[/]    //表示svn服务器中的所有资源库</p>
+<p>@Manager = rw  // Manager这个组中的所有用户对所有资源库都有读写(rw)权限，组名前面要用@ ；但如果是用户名，不用加@，比如 test 这个用户有读写权限</p>
+<p>4、最后就可以启动SVN服务器了，在终端输入 svnserve -d -r  文件名，</p>
+<p>如果没有任何提示，这证明启动成功了，</p>
+<p>5、上传本工程代码：</p>
+<p>/Users/Frank/Desktop/Demo/      表示你需要上传的工程文件路径</p>
+<p>svn://localhost/SVNTest              表示SVN地址，其中localhost表示本地svn地址，如果是远程svn，则localhost需要替换成对应的svn服务器ip地址，SVNTest表示svn服务器的名字</p>
+<p>–username=test –password=test -m”初始化”   表示你之前配置的账号密码，以及填写的操作信息，成功之后如图所示：</p>
+<p>6、从服务器端下载代码到客户端本地</p>
+<p>在终端中输入 $ svn checkout svn://localhost/SVNTest –username=test –password=test  /Users/Frank/Desktop/DownLoadDemo</p>
+<p>表示从将svn上的工程下载到桌面上的DownLoadDemo文件夹中</p>
+<p>7、当需要关闭svn的时候，可以通过终端命令：sudo  killall  svnserve 进行关闭，也可以在进程中关闭</p>
+<p>只有svn其他的语法命令，可以通过终端命令 svn help 进行查看</p>
+<p>（二）以上便是SVN服务器在Mac上的创建过程，下面要说一下Git的创建使用方式：</p>
+<p>Git管理代码是比较方便的，只需要你在社区创建自己的代码仓库，然后关联到本地仓库，就可以进行使用了，那么下面就具体说一种Git的代码托管平台Coding.net <a href="https://coding.net/user" target="_blank" rel="external">https://coding.net/user</a></p>
+<p>1、首先我们需要拥有自己的Coding.net的账号，然后在Coding.net上创建一个项目</p>
+<p>点击创建项目之后，就可以在自己的 项目 页面中查看你说创建的新项目</p>
+<p>那么为什么我们需要在Coding创库上先创建这个项目，因为当我们创建这个项目的时候，创库会自动为我们的这个项目分配一个访问地址，这个在我们关联到本地时是不可缺少的</p>
+<p>2、开始进行本地关联，在本地创建一个文件夹，作为本地仓库，例如在桌面上创建一个LocalStore</p>
+<p>3、打开Mac终端，键入 $ cd +本地仓库路径  ，对本地仓库进行操作，如图成功进入本地仓库</p>
+<p>4、执行终端命令：git init    //对本地仓库进行初始化</p>
+<p>此时已经初始化成功，系统化为本地仓库创建一个分支 master，但是打开本地仓库却看不到这个分支，因为这个分支是隐藏文件，不需要你去手动修改</p>
+<p>5、执行终端命令：git remote add origin  +远程仓库的访问地址</p>
+<p>例如：用来将本地仓库和Coding.net上的远程仓库进行关联起来</p>
+<p>6、此时将你想要上传到仓库的项目的工程文件直接拖入本地仓库</p>
+<p>7、终端命令：git status    // 进行查看仓库状态，红色的提示就是改动过的文件</p>
+<p>8、终端命令：git add -A    // 将所有改动过的文件添加到缓存中，并非直接上传（如果只提交某一个文件时，可以执行 git add +文件名）</p>
+<p>9、终端命令：git commit -a -m”添加备注信息”   // 提交到仓库，-a 表示提交缓存中的所有文件，-m” “ 添加的一些备注信息   成功之后如下图所示：</p>
+<p>10、终端命令：git pull origin master   // 先从远程仓库上更新代码文件</p>
+<p>此时会进入 vim 编辑，可以按 esc –&gt; : –&gt; wq 进行保存并退出</p>
+<p>注意：【下面这种错误如果出现了，可以进行如下操作，否则就可忽略这部分操作】</p>
+<p>如果此时终端提示报错，显示没有操作远程仓库的权限时，如下所示：</p>
+<p>[You have no permission to access this repo]</p>
+<p>error:Therequested URL returned error:403Forbiddenwhileaccessing <a href="https://github.com/iopqrst/learn20140823.git/info/refs" target="_blank" rel="external">https://github.com/iopqrst/learn20140823.git/info/refs</a></p>
+<p>此时，需要你在终端修改仓库 url 的地址格式：</p>
+<p>终端输入：vim .git/config  // 这时终端进入vim编译模式，</p>
+<p>修改：</p>
+<p>[remote “origin”]</p>
+<p>url = <a href="https://github.com/youname/example.git" target="_blank" rel="external">https://github.com/youname/example.git</a></p>
+<p>为：</p>
+<p>[remote “origin”]</p>
+<p>url = <a href="https://youname@github.com/youname/example.git" target="_blank" rel="external">https://youname@github.com/youname/example.git</a></p>
+<p>【其中的 youname 指的是你的远程仓库名字】</p>
+<p>然后可以按 esc –&gt; : –&gt; wq 进行保存并退出</p>
+<p>再重新执行步骤 10 进行更新。</p>
+<p>11、终端命令：git push -u origin master  // 将本地仓库的文件代码同步到远程Coding仓库，第一次同步时，需要添加 -u ,实现远程仓库与本地仓库分支进行关联 ，以后再同步时可以直接执行 git push origin master</p>
+<p>12、提示输入 Coding.net 的账号密码</p>
+<p>注意：如果没有执行 10 ，不先更新代码直接同步的话，会出现报错</p>
+<p>这是提示你需要先进行更新，才能同步，然后你执行 10 之后，再键入 git push origin master 就可以了，成功同步之后为</p>
+<p>此时可以查看你的Coding仓库查看提交记录</p>
+<p>至于git的其他终端操作命令，可以通过 git help 进行查看</p>
+<p>以上就是Mac上创建SVN服务器和关联Git管理仓库的方法，代码管理的平台工具、方法都有很多，无论哪种方法，只要自己用起来方便就是最好的方法</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2017-03-13</span><i class="fa fa-comment-o"></i><a href="/2017/03/13/代码管理之SVN服务器及Git的创建与使用/#comments">评论</a><i class="fa fa-tag"></i></div></div></div></div><div class="share"><div class="evernote"> <a href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank" class="fa fa-bookmark"></a></div><div class="weibo"> <a href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));" class="fa fa-weibo"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a role="navigation" href="/2017/03/13/IOS开发过程遇到的工程错误记录：/" title="IOS开发过程遇到的工程错误记录：" class="btn">上一篇</a></li><li class="next pagbuttons"><a role="navigation" href="/2017/03/12/常用算法/" title="C语言与Object-C中的常用经典排序算法" class="btn">下一篇</a></li></ul></div><a id="comments"></a><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
+var disqus_identifier = '2017/03/13/代码管理之SVN服务器及Git的创建与使用/';
+var disqus_title = '代码管理之SVN服务器及Git的创建与使用';
+var disqus_url = 'https://Kinglions.github.io/2017/03/13/代码管理之SVN服务器及Git的创建与使用/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//seansun.disqus.com/count.js" async></script></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
