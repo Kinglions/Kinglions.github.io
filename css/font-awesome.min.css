@@ -152,6 +152,10 @@
 .fa-inverse {
 	color:#fff
 }
+
+.fa-emil:before {
+    content:"\f064"
+}
 .fa-glass:before {
 	content:"\f000"
 }
